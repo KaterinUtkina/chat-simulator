@@ -1,0 +1,5 @@
+.scroll {
+    .os-scrollbar .os-scrollbar-handle {
+        background: rgba(209, 213, 219);
+    }
+}

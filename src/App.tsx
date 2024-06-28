@@ -1,9 +1,8 @@
 import Chat from "./views/chat/Chat.tsx";
+import "overlayscrollbars/styles/overlayscrollbars.css";
 
 function App() {
-    return (
-        <Chat/>
-    )
+    return <Chat/>
 }
 
 export default App
