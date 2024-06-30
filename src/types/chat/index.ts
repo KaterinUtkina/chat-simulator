@@ -15,4 +15,10 @@ export namespace Chat {
         answer: string[],
         warning: boolean
     }
+
+    export type AnswerRequest = {
+        questionId: string,
+        freeAnswer: string,
+        options: string[]
+    }
 }

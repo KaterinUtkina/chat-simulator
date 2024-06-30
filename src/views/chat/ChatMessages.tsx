@@ -5,6 +5,7 @@ import RotateIcon from "../components/svg/RotateIcon.tsx";
 import WarningIcon from "../components/svg/WarningIcon.tsx";
 import ScrollChat from "./ScrollChat.tsx";
 import ClockIcon from "../components/svg/ClockIcon.tsx";
+import {memo, useCallback} from "react";
 
 type ChatMessageProps = {
     questions: Chat.Question[],
@@ -14,37 +15,36 @@ type ChatMessageProps = {
     reloadAnswer: (index: number) => void
 }
 
-function ChatMessages(props: ChatMessageProps) {
-
-    const question = (question: string) => {
+const ChatMessages = memo(function ChatMessages(props: ChatMessageProps) {
+    const question = useCallback((question: string) => {
         return (
             <div className={"flex gap-4 mb-5 items-start"}>
-                <div className={"flex items-center justify-center bg-gray-500 w-10 h-10 rounded-full overflow-hidden"}>
+                <div className={"flex items-center justify-center bg-violet-400 w-10 h-10 rounded-full overflow-hidden"}>
                     <UserIcon className={"w-full h-full pt-1 fill-white"}/>
                 </div>
-                <div className={"max-w-lg"}>
+                <div className={"max-w-lg pt-2 pb-2"}>
                     {question}
                 </div>
             </div>
         )
-    }
+    }, []);
 
-    const loadingQuestion = () => {
+    const loadingQuestion = useCallback(() => {
         return (
             <div className={"flex gap-4 mb-5 items-start"}>
-                <div className={"flex items-center justify-center bg-gray-500 w-10 h-10 rounded-full overflow-hidden"}>
+                <div className={"flex items-center justify-center bg-violet-400 w-10 h-10 rounded-full overflow-hidden"}>
                     <UserIcon className={"w-full h-full pt-1 fill-white"}/>
                 </div>
                 <div className={"mt-auto pb-1"}>
                     <div className={"flex gap-2"}>
-                        <span className={`${styles.animate} w-1 h-1 bg-gray-500 rounded-full`}></span>
-                        <span className={`${styles.animate} w-1 h-1 bg-gray-500 rounded-full`}></span>
-                        <span className={`${styles.animate} w-1 h-1 bg-gray-500 rounded-full`}></span>
+                        <span className={`${styles.animate} w-1 h-1 bg-violet-400 rounded-full`}></span>
+                        <span className={`${styles.animate} w-1 h-1 bg-violet-400 rounded-full`}></span>
+                        <span className={`${styles.animate} w-1 h-1 bg-violet-400 rounded-full`}></span>
                     </div>
                 </div>
             </div>
         )
-    }
+    }, []);
 
     const answer = (
         answer: Chat.Answer,
@@ -109,6 +109,6 @@ function ChatMessages(props: ChatMessageProps) {
             </div>
         </ScrollChat>
     )
-}
+});
 
 export default ChatMessages;
