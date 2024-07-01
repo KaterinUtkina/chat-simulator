@@ -60,24 +60,24 @@ const ChatMessages = memo(function ChatMessages(props: ChatMessageProps) {
 
         return (
             answerText.length ? (
-                <div className={"flex justify-end relative"}>
-                    <div className={`mb-5 p-3 rounded-2xl bg-white max-w-lg shadow-md ${
-                        (isLoading) ? "pr-8" : ""} ${(!isLoading && answer.warning) ? "pr-12" : ""}`}>
+                <div className={`flex justify-end relative mb-5 gap-3`}>
+                    {answer.warning ? (
+                        <WarningIcon className={"w-5 h-5 fill-red-900 self-center"}/>
+                    ) : <></>}
+                    <div className={`p-3 rounded-2xl bg-white max-w-lg shadow-md ${
+                        (isLoading || answer.warning ) ? "pr-8" : ""}`}>
                         {answerText}
                     </div>
-                    <div className={`flex absolute bottom-6 right-1.5 gap-1`}>
+                    <div className={`flex absolute bottom-1 right-1.5 gap-1`}>
                         {isLoading ? (
                             <ClockIcon className={"w-4 h-4 fill-gray-600"}/>
                         ) :<></>}
-                        {!isLoading && answer.warning ? (
-                            <>
-                                <WarningIcon className={"w-4 h-4 fill-red-900"}/>
-                                <button
-                                    onClick={() => props.reloadAnswer(answerIndex)}
-                                    type={"button"}>
-                                    <RotateIcon className={"w-4 h-4 fill-gray-600 hover:fill-gray-400"}/>
-                                </button>
-                            </>
+                        {!isLoading && answer.warning && isLastAnswer ? (
+                            <button
+                                onClick={() => props.reloadAnswer(answerIndex)}
+                                type={"button"}>
+                                <RotateIcon className={"w-4 h-4 fill-red-900 hover:fill-gray-400"}/>
+                            </button>
                         ) :<></>}
                     </div>
                 </div>

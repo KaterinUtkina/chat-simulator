@@ -17,11 +17,19 @@ const ChatAnswerArea = memo(function ChatAnswerArea(props: ChatAnswerAreaProps) 
     const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
         setAnswer(event.target.value);
 
+        const previousRows = event.target.rows;
         event.target.rows = 1;
 
-        const lineHeightPx = 24;
-
+        const lineHeightPx = parseFloat(getComputedStyle(event.target).lineHeight);
         const currentRows = Math.ceil(event.target.scrollHeight / lineHeightPx);
+
+        if (currentRows === previousRows) {
+            event.target.rows = currentRows;
+        }
+
+        if (currentRows > MAX_ROWS) {
+            event.target.rows = MAX_ROWS;
+        }
 
         setRows(currentRows < MAX_ROWS ? currentRows : MAX_ROWS);
     };
