@@ -1,30 +1,68 @@
-# React + TypeScript + Vite
+# Chat Simulator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Chat Simulator is a React-based application that simulates chat interactions. This project utilizes React, TypeScript, Vite, Tailwind and the `overlayscrollbars-react` plugin to create a smooth and interactive user experience.
 
-Currently, two official plugins are available:
+## Table of Contents
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [Features](#features)
+- [Live Demo](#live-demo)
+- [Getting Started](#getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Installation](#installation)
+    - [Usage](#usage)
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- Interactive chat simulation
+- Smooth scrolling using `overlayscrollbars-react`
+- Built with modern web technologies: React, TypeScript, Tailwind and Vite
 
-- Configure the top-level `parserOptions` property like this:
+## Live Demo
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+Check out the live demo of the Chat Simulator: [Chat Simulator Live Demo](https://katerinutkina.github.io/chat-simulator/)
+
+## Getting Started
+
+### Prerequisites
+
+Ensure you have the following installed on your local machine:
+
+- [Node.js](https://nodejs.org/) (version 20 or higher)
+- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/KaterinUtkina/chat-simulator.git
+   cd chat-simulator
+   
+2. Install the dependencies:
+ 
+    Using npm:
+    
+    ```bash
+    npm install
+    ```
+    Using yarn:
+    ```bash
+    yarn install
+    ```
+### Usage
+
+To start the development server, run:
+
+Using npm:
+
+```bash
+npm run dev
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Using yarn:
+
+```bash
+yarn dev
+```
+
+Open your browser and navigate to http://localhost:3000 to see the application running locally.
