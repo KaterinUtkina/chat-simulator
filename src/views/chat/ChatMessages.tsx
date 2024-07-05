@@ -19,7 +19,7 @@ const ChatMessages = memo(function ChatMessages(props: ChatMessageProps) {
     const question = useCallback((question: string) => {
         return (
             <div className={"flex gap-4 mb-5 items-start"}>
-                <div className={"flex items-center justify-center bg-violet-400 w-10 h-10 rounded-full overflow-hidden"}>
+                <div className={"flex items-center justify-center shrink-0 bg-violet-400 w-10 h-10 rounded-full overflow-hidden"}>
                     <UserIcon className={"w-full h-full pt-1 fill-white"}/>
                 </div>
                 <div className={"max-w-lg pt-2 pb-2"}>
@@ -62,7 +62,7 @@ const ChatMessages = memo(function ChatMessages(props: ChatMessageProps) {
             answerText.length ? (
                 <div className={`flex justify-end relative mb-5 gap-3`}>
                     {answer.warning ? (
-                        <WarningIcon className={"w-5 h-5 fill-red-900 self-center"}/>
+                        <WarningIcon className={"w-5 h-5 fill-red-900 self-center shrink-0"}/>
                     ) : <></>}
                     <div className={`p-3 rounded-2xl bg-white max-w-lg shadow-md ${
                         (isLoading || answer.warning ) ? "pr-8" : ""}`}>
@@ -87,7 +87,7 @@ const ChatMessages = memo(function ChatMessages(props: ChatMessageProps) {
 
     return (
         <ScrollChat>
-            <div className={"w-7/12 mx-auto pt-5 pb-5"}>
+            <div className={"w-full md:w-7/12 mx-auto px-4 md:px-0 py-5"}>
                 {props.questions.map(questionItem => (
                     <div key={questionItem.id}>
                         {question(questionItem.text)}

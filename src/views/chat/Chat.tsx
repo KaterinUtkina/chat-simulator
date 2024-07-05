@@ -31,7 +31,7 @@ function Chat() {
                                 reloadAnswer={reloadAnswer}
                             />
                         </div>
-                        <div className={"w-7/12 mx-auto"}>
+                        <div className={"w-full px-4 md:px-0 md:w-7/12 mx-auto"}>
                             <ChatAnswerArea
                                 sendAnswerHandler={sendAnswerHandler}
                                 loading={questionLoading || answerLoading}
