@@ -1,7 +1,8 @@
 export namespace Chat {
     export type QuestionOptions = {
         id: string,
-        text: string
+        text: string,
+        options: string[]
     }
 
     export type Question = {

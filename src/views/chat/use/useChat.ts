@@ -1,5 +1,6 @@
 import {useCallback, useEffect, useState} from "react";
 import {Chat} from "../../../types/chat";
+import questionsMock from "../../../assets/questions.json";
 
 function useLoading() {
     const [loading, setLoading] = useState(false);
@@ -9,18 +10,6 @@ function useLoading() {
 }
 
 export function useChat() {
-    const questionsDataMock = [
-        {
-            id: "1",
-            options: [],
-            question: "What your name?"
-        },
-        {
-            id: "2",
-            options: [],
-            question: "How old are you?"
-        }
-    ];
     const [questions, setQuestions]
         = useState<Chat.Question[]>([]);
     const [activeQuestionId, setActiveQuestionId]
@@ -69,7 +58,7 @@ export function useChat() {
             stopAnswerLoading();
             resetQuestions();
 
-            if (!questionsDataMock[questionsList.length]) return;
+            if (!questionsMock[questionsList.length]) return;
 
             startQuestionLoading();
 
@@ -153,14 +142,14 @@ export function useChat() {
             const newQuestions = [
                 ...questionsList,
                 {
-                    id: questionsDataMock[questionsList.length].id,
-                    text: questionsDataMock[questionsList.length].question,
+                    id: questionsMock[questionsList.length].id,
+                    text: questionsMock[questionsList.length].text,
                     answer: []
                 }
             ];
 
             setQuestions(newQuestions);
-            setActiveQuestionId(questionsDataMock[questionsList.length].id);
+            setActiveQuestionId(questionsMock[questionsList.length].id);
         }, 500);
     }, []);
 
