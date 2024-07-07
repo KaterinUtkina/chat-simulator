@@ -36,7 +36,6 @@ function ScrollChat(
             scrollContent();
         }
 
-        // eslint-disable-next-line
     }, [getContentHeight, props.children]);
 
     return (

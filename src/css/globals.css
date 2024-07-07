@@ -1,6 +1,9 @@
+:root {
+  --window-height: 100dvh;
+}
+
 #root {
-  height: 100dvh;
-  min-height: 100dvh;
+  height: var(--window-height);
 }
 
 * {

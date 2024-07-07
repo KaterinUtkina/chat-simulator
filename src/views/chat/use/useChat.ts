@@ -1,13 +1,8 @@
 import {useCallback, useEffect, useState} from "react";
 import {Chat} from "../../../types/chat";
 import questionsMock from "../../../assets/questions.json";
-
-function useLoading() {
-    const [loading, setLoading] = useState(false);
-    const startLoading = () => setLoading(true);
-    const stopLoading = () => setLoading(false);
-    return {loading, startLoading, stopLoading};
-}
+import {changeWindowHeightHelpers} from "../../../js/helpers/changeWindowHeightHelpers.ts";
+import {useLoading} from "./useLoading.ts";
 
 export function useChat() {
     const [questions, setQuestions]
@@ -20,6 +15,8 @@ export function useChat() {
         = useState(0);
     const [optionsQuestion, setOptionsQuestions]
         = useState<Chat.QuestionOptions[]>([]);
+    const [isTouchDevice, setIsTouchDevice] = useState<boolean>(false);
+    const { setHeight } = changeWindowHeightHelpers();
 
     const createOrUpdateAnswers = (
         params: Chat.AnswerRequest,
@@ -183,6 +180,29 @@ export function useChat() {
         setOptionsQuestions([]);
     }
 
+    useEffect(() => {
+        setHeight();
+        initEvents();
+        checkTouchDevice();
+
+        return () => {
+            removeEvents();
+        }
+
+    }, []);
+
+    const initEvents = () => {
+        window.addEventListener('resize', setHeight);
+    }
+
+    const removeEvents = () => {
+        window.removeEventListener('resize', setHeight);
+    }
+
+    const checkTouchDevice = () => {
+        setIsTouchDevice(navigator.maxTouchPoints > 0);
+    }
+
     return {
         questions,
         questionLoading,
@@ -192,5 +212,6 @@ export function useChat() {
         activeAnswerIndex,
         sendAnswerHandler,
         optionsQuestion,
+        isTouchDevice,
     }
 }

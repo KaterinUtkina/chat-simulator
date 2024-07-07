@@ -10,12 +10,13 @@ function Chat() {
         activeQuestionId,
         reloadAnswer,
         sendAnswerHandler,
+        isTouchDevice,
     } = useChat();
 
     return (
-        <div className={"h-dvh overflow-hidden"}>
+        <div className={"h-full overflow-hidden"}>
             <div className={"h-full relative"}>
-                <header className="bg-white shadow absolute w-full">
+                <header className="bg-white shadow absolute w-full z-10">
                     <div className="px-4 py-6 sm:px-4 lg:px-6">
                         <h1 className="text-2xl tracking-tight text-gray-900">Chat</h1>
                     </div>
@@ -37,6 +38,7 @@ function Chat() {
                                 loading={questionLoading || answerLoading}
                                 questionId={activeQuestionId}
                                 options={[]}
+                                isTouchDevice={isTouchDevice}
                             />
                         </div>
                     </div>
