@@ -1,6 +1,6 @@
 # Chat Simulator
 
-Chat Simulator is a React-based application that simulates chat interactions. This project utilizes React, TypeScript, Vite, Tailwind and the `overlayscrollbars-react` plugin to create a smooth and interactive user experience.
+Chat Simulator is a React-based application that simulates chat interactions, including simulating errors while sending messages and the ability to resend them.
 
 ## Table of Contents
 
