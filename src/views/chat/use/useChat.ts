@@ -114,7 +114,6 @@ export function useChat() {
         questions,
         activeQuestionId,
         startAnswerLoading,
-        setQuestions,
         createOrUpdateAnswers,
         sendAnswerAndGetQuestion
     ]);
@@ -154,25 +153,29 @@ export function useChat() {
         void getQuestionHandler();
     }, [getQuestionHandler]);
 
-    const sendAnswerHandler = useCallback(async (params: Chat.AnswerRequest) => {
-        if (answerLoading || questionLoading) return;
+    const sendAnswerHandler = useCallback(async (params: {
+        freeAnswer: string,
+        options: string[]
+    }) => {
+        if (answerLoading || questionLoading || !activeQuestionId) return;
 
         const answerIndex = activeAnswerIndex;
         setActiveAnswerIndex(index => index + 1);
         startAnswerLoading();
 
-        const newQuestions = createOrUpdateAnswers(params, answerIndex);
+        const newQuestions = createOrUpdateAnswers(
+            {...params, questionId: activeQuestionId},
+            answerIndex
+        );
         setQuestions(newQuestions);
 
-        void sendAnswerAndGetQuestion(params, newQuestions, answerIndex);
+        void sendAnswerAndGetQuestion({...params, questionId: activeQuestionId}, newQuestions, answerIndex);
     }, [
         answerLoading,
         questionLoading,
         activeAnswerIndex,
-        setActiveAnswerIndex,
         startAnswerLoading,
         createOrUpdateAnswers,
-        setQuestions,
         sendAnswerAndGetQuestion
     ]);
 

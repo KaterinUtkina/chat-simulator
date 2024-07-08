@@ -4,10 +4,11 @@ import {Chat} from "../../types/chat";
 import {useChatAnswer} from "./use/useChatAnswer.ts";
 
 export type ChatAnswerAreaProps = {
-    loading: boolean,
     options: Chat.QuestionOptions[],
-    sendAnswerHandler: (params: Chat.AnswerRequest) => void,
-    questionId: string | null,
+    sendAnswerHandler: (params: {
+        freeAnswer: string,
+        options: string[]
+    }) => void,
     isTouchDevice: boolean
 }
 const ChatAnswerArea = memo(function ChatAnswerArea(props: ChatAnswerAreaProps) {
@@ -23,10 +24,10 @@ const ChatAnswerArea = memo(function ChatAnswerArea(props: ChatAnswerAreaProps) 
 
     return (
         <div onKeyDown={handleKeyDown} className={"pb-4"}>
-            <div className={"flex gap-2"}>
+            <div className={"flex gap-2 relative"}>
                 <div className={"grow shadow-md rounded-md p-3 bg-white flex"}>
                     <textarea
-                        className={"resize-none focus:outline-none w-full"}
+                        className={"resize-none focus:outline-none w-full mr-10"}
                         rows={rows}
                         ref={textareaRef}
                         onChange={handleChange}
@@ -35,8 +36,10 @@ const ChatAnswerArea = memo(function ChatAnswerArea(props: ChatAnswerAreaProps) 
                         {...settingsTextarea}
                     ></textarea>
                 </div>
-                <button className={"bg-violet-400 p-2.5 rounded-md shrink-0 mt-auto"} onClick={submitHandler}>
-                    <SendIcon className={"w-7 h-7 fill-white"}/>
+                <button
+                    className={"bg-violet-400 p-2.5 rounded-md shrink-0 mt-auto absolute right-2 bottom-1.5"}
+                    onClick={submitHandler}>
+                    <SendIcon className={"w-4 h-4 fill-white"}/>
                 </button>
             </div>
         </div>

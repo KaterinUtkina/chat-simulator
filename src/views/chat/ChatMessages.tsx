@@ -65,8 +65,8 @@ const ChatMessages = memo(function ChatMessages(props: ChatMessageProps) {
                         <WarningIcon className={"w-5 h-5 fill-red-900 self-center shrink-0"}/>
                     ) : <></>}
                     <div className={`p-3 rounded-2xl bg-white max-w-lg shadow-md ${
-                        (isLoading || answer.warning ) ? "pr-8" : ""}`}>
-                        {answerText}
+                        (isLoading || (answer.warning && isLastAnswer) ) ? "pr-8" : ""}`}>
+                        <p className={"break-words"}>{answerText}</p>
                     </div>
                     <div className={`flex absolute bottom-1 right-1.5 gap-1`}>
                         {isLoading ? (

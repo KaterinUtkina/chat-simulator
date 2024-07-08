@@ -1,5 +1,4 @@
 import {ChangeEvent, KeyboardEventHandler, useRef, useState} from "react";
-import {Chat} from "../../../types/chat";
 import {ChatAnswerAreaProps} from "../ChatAnswerArea.tsx";
 
 export function useChatAnswer(
@@ -50,10 +49,9 @@ export function useChatAnswer(
     };
 
     const submitHandler = () => {
-        if (props.loading || !props.questionId || !answer.length) return;
+        if (!answer.length) return;
 
-        const params: Chat.AnswerRequest = {
-            questionId: props.questionId,
+        const params = {
             freeAnswer: answer,
             options: []
         }
