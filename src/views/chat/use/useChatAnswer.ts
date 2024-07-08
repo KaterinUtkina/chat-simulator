@@ -1,4 +1,4 @@
-import {ChangeEvent, KeyboardEventHandler, useRef, useState} from "react";
+import {ChangeEvent, KeyboardEventHandler, useEffect, useRef, useState} from "react";
 import {ChatAnswerAreaProps} from "../ChatAnswerArea.tsx";
 
 export function useChatAnswer(
@@ -6,8 +6,20 @@ export function useChatAnswer(
 ) {
     const [answer, setAnswer] = useState<string>("");
     const [rows, setRows] = useState(1);
+    const [options, setOptions] = useState<Record<string, boolean> | null>(null);
     const textareaRef = useRef<HTMLTextAreaElement | null>(null);
     const MAX_ROWS = 6;
+
+    useEffect(() => {
+        const optionsTemplate = props.options.reduce((acc, option) => {
+            return {
+                ...acc,
+                [option]: false
+            }
+        }, {});
+
+        setOptions(optionsTemplate);
+    }, [props.options]);
 
     const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
         setAnswer(event.target.value);
@@ -49,11 +61,15 @@ export function useChatAnswer(
     };
 
     const submitHandler = () => {
-        if (!answer.length) return;
+        if (!(answer.length || (options && Object.keys(options).length))) return;
+
+        const checkedOptions = options ? Object.keys(options).filter(option => {
+            return options[option];
+        }) : [];
 
         const params = {
             freeAnswer: answer,
-            options: []
+            options: checkedOptions,
         }
 
         props.sendAnswerHandler(params);
@@ -72,6 +88,15 @@ export function useChatAnswer(
         onBlur: handleBlur
     };
 
+    const toggleChecked = (item: string) => {
+        setOptions(prevState => {
+            if (!prevState) return null;
+            return {
+                ...prevState,
+                [item]: !prevState[item]
+            }
+        });
+    }
 
     return {
         rows,
@@ -81,5 +106,7 @@ export function useChatAnswer(
         settingsTextarea,
         textareaRef,
         answer,
+        toggleChecked,
+        options,
     }
 }

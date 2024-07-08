@@ -8,7 +8,7 @@ import ClockIcon from "../components/svg/ClockIcon.tsx";
 import {memo, useCallback} from "react";
 
 type ChatMessageProps = {
-    questions: Chat.Question[],
+    questions: Chat.QuestionTemplate[],
     questionLoading: boolean,
     activeQuestionId: string | null,
     answerLoading: boolean,
@@ -55,7 +55,8 @@ const ChatMessages = memo(function ChatMessages(props: ChatMessageProps) {
         const isLoading = props.activeQuestionId === questionId && isLastAnswer && props.answerLoading;
 
         const answerText = [
-            ...answer.options.map(item => item.text), ...answer.answer
+            ...answer.options,
+            ...answer.answer
         ].filter(item => item.length).join(', ');
 
         return (

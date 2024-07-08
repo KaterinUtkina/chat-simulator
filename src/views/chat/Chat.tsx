@@ -11,6 +11,7 @@ function Chat() {
         reloadAnswer,
         sendAnswerHandler,
         isTouchDevice,
+        optionsQuestion,
     } = useChat();
 
     return (
@@ -35,7 +36,7 @@ function Chat() {
                         <div className={"w-full px-4 md:px-0 md:w-7/12 mx-auto"}>
                             <ChatAnswerArea
                                 sendAnswerHandler={sendAnswerHandler}
-                                options={[]}
+                                options={optionsQuestion}
                                 isTouchDevice={isTouchDevice}
                             />
                         </div>

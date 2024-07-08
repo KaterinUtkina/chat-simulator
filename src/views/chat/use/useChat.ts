@@ -6,7 +6,7 @@ import {useLoading} from "./useLoading.ts";
 
 export function useChat() {
     const [questions, setQuestions]
-        = useState<Chat.Question[]>([]);
+        = useState<Chat.QuestionTemplate[]>([]);
     const [activeQuestionId, setActiveQuestionId]
         = useState<string | null>(null);
     const {loading: answerLoading, startLoading: startAnswerLoading, stopLoading: stopAnswerLoading} = useLoading();
@@ -14,7 +14,7 @@ export function useChat() {
     const [activeAnswerIndex, setActiveAnswerIndex]
         = useState(0);
     const [optionsQuestion, setOptionsQuestions]
-        = useState<Chat.QuestionOptions[]>([]);
+        = useState<string[]>([]);
     const [isTouchDevice, setIsTouchDevice] = useState<boolean>(false);
     const { setHeight } = changeWindowHeightHelpers();
 
@@ -24,7 +24,7 @@ export function useChat() {
     ) => {
 
         const newAnswers = {
-            options: [],
+            options: params.options,
             answer: [params.freeAnswer],
             warning: false
         };
@@ -46,7 +46,7 @@ export function useChat() {
 
     const sendAnswerAndGetQuestion = async (
         params: Chat.AnswerRequest,
-        questionsList: Chat.Question[],
+        questionsList: Chat.QuestionTemplate[],
         answerIndex: number
     ) => {
         try {
@@ -101,7 +101,7 @@ export function useChat() {
         const params = {
             questionId: activeQuestionId,
             freeAnswer: updateAnswer.answer[0],
-            options: updateAnswer.options.map(item => item.id)
+            options: updateAnswer.options
         }
 
         const newQuestions = createOrUpdateAnswers(params, index);
@@ -145,6 +145,7 @@ export function useChat() {
             ];
 
             setQuestions(newQuestions);
+            setOptionsQuestions(questionsMock[questionsList.length].options as string[]);
             setActiveQuestionId(questionsMock[questionsList.length].id);
         }, 500);
     }, []);
