@@ -61,7 +61,9 @@ export function useChatAnswer(
     };
 
     const submitHandler = () => {
-        if (!(answer.length || (options && Object.keys(options).length))) return;
+        if (!(answer.length
+            || (options && Object.values(options)
+                .some(value => !value)))) return;
 
         const checkedOptions = options ? Object.keys(options).filter(option => {
             return options[option];

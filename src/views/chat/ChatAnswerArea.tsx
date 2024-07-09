@@ -25,7 +25,7 @@ const ChatAnswerArea = memo(function ChatAnswerArea(props: ChatAnswerAreaProps) 
 
     return (
         <div onKeyDown={handleKeyDown} className={"pb-4"}>
-            <ul className={"flex gap-4 justify-between mb-4 pt-4"}>
+            <ul className={"flex gap-4 justify-between mb-4 pt-4 flex-wrap"}>
                 {options && Object.keys(options).map((optionKey, index) => (
                     <li
                         onClick={() => toggleChecked(optionKey)}
