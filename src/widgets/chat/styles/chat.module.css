@@ -1,7 +1,3 @@
-.wrapper {
-    height: 100%;
-}
-
 .animate {
     animation: lds-default 1.2s linear infinite;
 

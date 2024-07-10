@@ -1,4 +1,4 @@
-function RotateIcon({className}: {className: string})  {
+export const RotateIcon = ({className}: {className: string}) => {
     return (
         <svg className={className} xmlns="http://www.w3.org/2000/svg" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 511.494 511.494" width="512" height="512">
             <g>
@@ -7,6 +7,3 @@ function RotateIcon({className}: {className: string})  {
         </svg>
     );
 }
-
-export default RotateIcon;
-

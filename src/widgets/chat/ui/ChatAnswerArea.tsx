@@ -1,8 +1,8 @@
 import {memo} from "react";
-import SendIcon from "../components/svg/SendIcon.tsx";
-import {useChatAnswer} from "./use/useChatAnswer.ts";
+import {SendIcon} from "../../../app";
+import {useChatAnswer} from "../lib/useChatAnswer.ts";
 
-export type ChatAnswerAreaProps = {
+type ChatAnswerAreaProps = {
     options: string[],
     sendAnswerHandler: (params: {
         freeAnswer: string,
@@ -21,16 +21,20 @@ const ChatAnswerArea = memo(function ChatAnswerArea(props: ChatAnswerAreaProps) 
         answer,
         toggleChecked,
         options,
+        optionsRef,
     } = useChatAnswer(props);
 
     return (
         <div onKeyDown={handleKeyDown} className={"pb-4"}>
-            <ul className={"flex gap-4 justify-between mb-4 pt-4 flex-wrap"}>
+            <ul className={"flex gap-4 justify-between mb-4 flex-wrap"} ref={optionsRef}>
                 {options && Object.keys(options).map((optionKey, index) => (
                     <li
                         onClick={() => toggleChecked(optionKey)}
                         key={index}
-                        className={`py-2 px-6 bg-violet-200 rounded-lg cursor-pointer box-border grow text-center ${options && options[optionKey] ? "outline outline-2 outline-violet-400" : ""}`}>
+                        className={`py-2 px-6 bg-violet-200 rounded-lg cursor-pointer box-border grow text-center hover:outline hover:outline-2 hover:outline-violet-400 ${
+                            options && options[optionKey]
+                                ? "outline outline-2 outline-violet-400" 
+                                : ""}`}>
                         {optionKey}
                     </li>
                 ))}

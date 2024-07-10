@@ -1,11 +1,8 @@
-import {Chat} from "../../types/chat";
-import styles from "../../css/chat.module.css";
-import UserIcon from "../components/svg/UserIcon.tsx";
-import RotateIcon from "../components/svg/RotateIcon.tsx";
-import WarningIcon from "../components/svg/WarningIcon.tsx";
+import styles from "../styles/chat.module.css";
 import ScrollChat from "./ScrollChat.tsx";
-import ClockIcon from "../components/svg/ClockIcon.tsx";
 import {memo, useCallback} from "react";
+import {Chat} from "../types";
+import {ClockIcon, RotateIcon, UserIcon, WarningIcon} from "../../../app";
 
 type ChatMessageProps = {
     questions: Chat.QuestionTemplate[],

@@ -1,8 +1,8 @@
 import ChatMessages from "./ChatMessages.tsx";
-import {useChat} from "./use/useChat.ts";
 import ChatAnswerArea from "./ChatAnswerArea.tsx";
+import {useChat} from "../lib/useChat.ts";
 
-function Chat() {
+export const Chat = () => {
     const {
         questions,
         questionLoading,
@@ -33,7 +33,7 @@ function Chat() {
                                 reloadAnswer={reloadAnswer}
                             />
                         </div>
-                        <div className={"w-full px-4 md:px-0 md:w-7/12 mx-auto"}>
+                        <div className={"w-full px-4 md:px-0 md:w-7/12 mx-auto z-10"}>
                             <ChatAnswerArea
                                 sendAnswerHandler={sendAnswerHandler}
                                 options={optionsQuestion}
@@ -46,5 +46,3 @@ function Chat() {
         </div>
     );
 }
-
-export default Chat;

@@ -1,5 +1,14 @@
 import {ChangeEvent, KeyboardEventHandler, useEffect, useRef, useState} from "react";
-import {ChatAnswerAreaProps} from "../ChatAnswerArea.tsx";
+import {useAfterRender} from "../../../shared";
+
+type ChatAnswerAreaProps = {
+    options: string[],
+    sendAnswerHandler: (params: {
+        freeAnswer: string,
+        options: string[]
+    }) => void,
+    isTouchDevice: boolean
+}
 
 export function useChatAnswer(
     props: ChatAnswerAreaProps
@@ -9,6 +18,13 @@ export function useChatAnswer(
     const [options, setOptions] = useState<Record<string, boolean> | null>(null);
     const textareaRef = useRef<HTMLTextAreaElement | null>(null);
     const MAX_ROWS = 6;
+    const optionsRef = useRef<HTMLUListElement | null>(null);
+
+    useAfterRender(() => {
+        if (optionsRef.current) {
+            window.dispatchEvent(new CustomEvent('optionsRendered'));
+        }
+    }, [options]);
 
     useEffect(() => {
         const optionsTemplate = props.options.reduce((acc, option) => {
@@ -63,7 +79,7 @@ export function useChatAnswer(
     const submitHandler = () => {
         if (!(answer.length
             || (options && Object.values(options)
-                .some(value => !value)))) return;
+                .includes(true)))) return;
 
         const checkedOptions = options ? Object.keys(options).filter(option => {
             return options[option];
@@ -110,5 +126,6 @@ export function useChatAnswer(
         answer,
         toggleChecked,
         options,
+        optionsRef,
     }
 }

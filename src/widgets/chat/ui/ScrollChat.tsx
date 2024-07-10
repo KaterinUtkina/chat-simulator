@@ -1,6 +1,6 @@
-import React, {useEffect, useMemo, useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {OverlayScrollbarsComponent, OverlayScrollbarsComponentRef} from "overlayscrollbars-react";
-import styles from "../../css/base.module.css";
+import styles from "../../../app/styles/scroll.module.css";
 
 type CustomScrollProps = {
     children: React.ReactNode,
@@ -23,20 +23,22 @@ function ScrollChat(
         const { scrollOffsetElement } = osInstance.elements();
 
         scrollOffsetElement.scrollTo({
-            top: contentRef.current?.clientHeight ?? 0,
+            top: scrollOffsetElement.scrollHeight ?? 0,
         });
     };
-
-    const getContentHeight = useMemo(() => {
-        return contentRef.current ? contentRef.current.clientHeight : 0;
-    }, [contentRef, contentRef]);
 
     useEffect(() => {
         if (contentRef.current) {
             scrollContent();
         }
 
-    }, [getContentHeight, props.children]);
+    }, [props.children]);
+
+    useEffect(() => {
+        window.addEventListener('optionsRendered', () => {
+            scrollContent();
+        })
+    }, []);
 
     return (
         <OverlayScrollbarsComponent

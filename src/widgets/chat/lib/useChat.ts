@@ -1,7 +1,7 @@
 import {useCallback, useEffect, useState} from "react";
-import {Chat} from "../../../types/chat";
-import questionsMock from "../../../assets/questions.json";
 import {useLoading} from "./useLoading.ts";
+import {Chat} from "../types";
+import questionsMock from "../../../app/config/questions.json";
 
 export function useChat() {
     const [questions, setQuestions]
