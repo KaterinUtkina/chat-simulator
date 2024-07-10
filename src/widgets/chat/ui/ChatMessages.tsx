@@ -2,7 +2,7 @@ import styles from "../styles/chat.module.css";
 import ScrollChat from "./ScrollChat.tsx";
 import {memo, useCallback} from "react";
 import {Chat} from "../types";
-import {ClockIcon, RotateIcon, UserIcon, WarningIcon} from "../../../app";
+import {ClockIcon, RotateIcon, UserIcon, WarningIcon} from "../../../shared/ui";
 
 type ChatMessageProps = {
     questions: Chat.QuestionTemplate[],

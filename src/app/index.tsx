@@ -1,5 +1,5 @@
 import "overlayscrollbars/styles/overlayscrollbars.css";
-import {Chat} from "../../widgets/chat";
+import {Chat} from "../widgets/chat";
 
 function App() {
     return <Chat/>

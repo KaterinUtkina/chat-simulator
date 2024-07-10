@@ -1,6 +1,6 @@
 import {memo} from "react";
-import {SendIcon} from "../../../app";
 import {useChatAnswer} from "../lib/useChatAnswer.ts";
+import {SendIcon} from "../../../shared/ui";
 
 type ChatAnswerAreaProps = {
     options: string[],

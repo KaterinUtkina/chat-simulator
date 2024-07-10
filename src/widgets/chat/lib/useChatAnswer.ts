@@ -1,5 +1,5 @@
 import {ChangeEvent, KeyboardEventHandler, useEffect, useRef, useState} from "react";
-import {useAfterRender} from "../../../shared";
+import {useAfterRender} from "../../../shared/lib";
 
 type ChatAnswerAreaProps = {
     options: string[],
