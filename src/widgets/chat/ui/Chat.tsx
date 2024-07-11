@@ -2,7 +2,7 @@ import ChatMessages from "./ChatMessages.tsx";
 import ChatAnswerArea from "./ChatAnswerArea.tsx";
 import {useChat} from "../lib/useChat.ts";
 
-export const Chat = () => {
+export function Chat() {
     const {
         questions,
         questionLoading,
