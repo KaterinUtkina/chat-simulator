@@ -85,9 +85,9 @@ const ChatMessages = memo(function ChatMessages(props: ChatMessageProps) {
 
     return (
         <ScrollChat>
-            <div className={"w-full md:w-7/12 mx-auto px-4 md:px-0 py-5"}>
+            <ul className={"w-full md:w-7/12 mx-auto px-4 md:px-0 py-5"}>
                 {props.questions.map(questionItem => (
-                    <div key={questionItem.id}>
+                    <li key={questionItem.id}>
                         {question(questionItem.text)}
                         {questionItem.answer.map((answerItem, index) => (
                             <div key={index}>
@@ -99,12 +99,12 @@ const ChatMessages = memo(function ChatMessages(props: ChatMessageProps) {
                                 )}
                             </div>
                         ))}
-                    </div>
+                    </li>
                 ))}
                 {props.questionLoading ? (
                     loadingQuestion()
                 ) : <></>}
-            </div>
+            </ul>
         </ScrollChat>
     )
 });

@@ -24,7 +24,7 @@ export function Chat() {
                 </header>
                 <main className={"bg-gray-100 pt-20 h-full"}>
                     <div className="flex flex-col h-full">
-                        <div className={"h-max mb-auto overflow-y-auto"}>
+                        <section className={"h-max mb-auto overflow-y-auto"}>
                             <ChatMessages
                                 questions={questions}
                                 activeQuestionId={activeQuestionId}
@@ -32,14 +32,14 @@ export function Chat() {
                                 answerLoading={answerLoading}
                                 reloadAnswer={reloadAnswer}
                             />
-                        </div>
-                        <div className={"w-full px-4 md:px-0 md:w-7/12 mx-auto z-10"}>
+                        </section>
+                        <section className={"w-full px-4 md:px-0 md:w-7/12 mx-auto z-10"}>
                             <ChatAnswerArea
                                 sendAnswerHandler={sendAnswerHandler}
                                 options={optionsQuestion}
                                 isTouchDevice={isTouchDevice}
                             />
-                        </div>
+                        </section>
                     </div>
                 </main>
             </div>

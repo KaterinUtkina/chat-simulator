@@ -40,7 +40,7 @@ const ChatAnswerArea = memo(function ChatAnswerArea(props: ChatAnswerAreaProps) 
                 ))}
             </ul>
             <div className={"flex gap-2 relative"}>
-                <div className={"grow shadow-md rounded-md p-3 bg-white flex"}>
+                <label className={"grow shadow-md rounded-md p-3 bg-white flex"}>
                     <textarea
                         className={"resize-none focus:outline-none w-full mr-10"}
                         rows={rows}
@@ -50,8 +50,9 @@ const ChatAnswerArea = memo(function ChatAnswerArea(props: ChatAnswerAreaProps) 
                         placeholder={"Enter answer here..."}
                         {...settingsTextarea}
                     ></textarea>
-                </div>
+                </label>
                 <button
+                    type={"button"}
                     className={"bg-violet-400 p-2.5 rounded-md shrink-0 mt-auto absolute right-2 bottom-1.5"}
                     onClick={submitHandler}>
                     <SendIcon className={"w-4 h-4 fill-white"}/>
