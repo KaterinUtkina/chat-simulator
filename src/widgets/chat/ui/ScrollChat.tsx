@@ -1,6 +1,5 @@
 import React, {useEffect, useRef} from 'react';
 import {OverlayScrollbarsComponent, OverlayScrollbarsComponentRef} from "overlayscrollbars-react";
-import styles from "../../../app/styles/scroll.module.css";
 
 type CustomScrollProps = {
     children: React.ReactNode,
@@ -43,7 +42,6 @@ function ScrollChat(
     return (
         <OverlayScrollbarsComponent
             ref={ref}
-            className={styles.scroll}
             style={{ height: "100%" }}
             defer>
             <div ref={contentRef}>
