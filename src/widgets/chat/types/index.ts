@@ -1,10 +1,4 @@
 export namespace Chat {
-    export type Question = {
-        id: string,
-        text: string,
-        options: string[]
-    }
-
     export type QuestionTemplate = {
         id: string,
         text: string,

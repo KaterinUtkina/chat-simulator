@@ -1,11 +1,13 @@
 import React, {useEffect, useRef} from 'react';
 import {OverlayScrollbarsComponent, OverlayScrollbarsComponentRef} from "overlayscrollbars-react";
+import {eventBus} from "../../../shared/lib";
+import {ChatEvents} from "../enum";
 
 type CustomScrollProps = {
     children: React.ReactNode,
 }
 
-function ScrollChat(
+function ScrollChatMessage(
     props: CustomScrollProps
 ) {
     const ref = useRef<OverlayScrollbarsComponentRef>(null);
@@ -34,10 +36,20 @@ function ScrollChat(
     }, [props.children]);
 
     useEffect(() => {
-        window.addEventListener('optionsRendered', () => {
-            scrollContent();
-        })
+        initEvents();
+
+        return () => {
+            destroyEvents();
+        }
     }, []);
+
+    const initEvents = () => {
+        eventBus.on(ChatEvents.OPTIONS_RENDERED, scrollContent);
+    };
+
+    const destroyEvents = () => {
+        eventBus.off(ChatEvents.OPTIONS_RENDERED, scrollContent);
+    }
 
     return (
         <OverlayScrollbarsComponent
@@ -51,4 +63,4 @@ function ScrollChat(
     );
 }
 
-export default ScrollChat;
+export default ScrollChatMessage;

@@ -1,5 +1,6 @@
 import {ChangeEvent, KeyboardEventHandler, useEffect, useRef, useState} from "react";
-import {useAfterRender} from "../../../shared/lib";
+import {eventBus, useAfterRender} from "../../../shared/lib";
+import {ChatEvents} from "../enum";
 
 type ChatAnswerAreaProps = {
     options: string[],
@@ -22,7 +23,7 @@ export function useChatAnswer(
 
     useAfterRender(() => {
         if (optionsRef.current) {
-            window.dispatchEvent(new CustomEvent('optionsRendered'));
+            eventBus.emit(ChatEvents.OPTIONS_RENDERED);
         }
     }, [options]);
 
