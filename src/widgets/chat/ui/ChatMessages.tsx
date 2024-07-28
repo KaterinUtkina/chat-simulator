@@ -57,7 +57,7 @@ const ChatMessages = memo(function ChatMessages(props: ChatMessageProps) {
         ].filter(item => item.length).join(', ');
 
         return (
-            answerText.length ? (
+            answerText.length || answer.audio ? (
                 <div className={`flex justify-end relative mb-5 gap-3`}>
                     {answer.warning ? (
                         <WarningIcon className={"w-5 h-5 fill-red-900 self-center shrink-0"}/>
@@ -65,6 +65,7 @@ const ChatMessages = memo(function ChatMessages(props: ChatMessageProps) {
                     <div className={`p-3 rounded-2xl bg-white max-w-lg shadow-md ${
                         (isLoading || (answer.warning && isLastAnswer) ) ? "pr-8" : ""}`}>
                         <p className={"break-words"}>{answerText}</p>
+                        {answer.audio && <audio src={answer.audio.src} controls/>}
                     </div>
                     <div className={`flex absolute bottom-1 right-1.5 gap-1`}>
                         {isLoading ? (

@@ -1,12 +1,14 @@
 import {memo} from "react";
 import {useChatAnswer} from "../lib/useChatAnswer.ts";
-import {SendIcon} from "../../../shared/ui";
+import {MicrophoneIcon, SendIcon} from "../../../shared/ui";
+import {StopIcon} from "../../../shared/ui/icon/StopIcon.tsx";
 
 type ChatAnswerAreaProps = {
     options: string[],
     sendAnswerHandler: (params: {
         freeAnswer: string,
-        options: string[]
+        options: string[],
+        audio: HTMLAudioElement | null,
     }) => void,
     isTouchDevice: boolean
 }
@@ -22,6 +24,8 @@ const ChatAnswerArea = memo(function ChatAnswerArea(props: ChatAnswerAreaProps) 
         toggleChecked,
         options,
         optionsRef,
+        recordHandler,
+        isRecord,
     } = useChatAnswer(props);
 
     return (
@@ -42,7 +46,7 @@ const ChatAnswerArea = memo(function ChatAnswerArea(props: ChatAnswerAreaProps) 
             <div className={"flex gap-2 relative"}>
                 <label className={"grow shadow-md rounded-md p-3 bg-white flex"}>
                     <textarea
-                        className={"resize-none focus:outline-none w-full mr-10"}
+                        className={"resize-none focus:outline-none w-full mr-24"}
                         rows={rows}
                         ref={textareaRef}
                         onChange={handleChange}
@@ -51,6 +55,17 @@ const ChatAnswerArea = memo(function ChatAnswerArea(props: ChatAnswerAreaProps) 
                         {...settingsTextarea}
                     ></textarea>
                 </label>
+                <button
+                    type={"button"}
+                    className={"rounded-md p-1 shrink-0 mt-auto absolute right-14 bottom-1.5"}
+                    onClick={recordHandler}
+                >
+                    {isRecord ? (
+                        <StopIcon className={"w-7 h-7 fill-violet-400"}/>
+                    ) : (
+                        <MicrophoneIcon className={"w-7 h-7 fill-violet-400"}/>
+                    )}
+                </button>
                 <button
                     type={"button"}
                     className={"bg-violet-400 p-2.5 rounded-md shrink-0 mt-auto absolute right-2 bottom-1.5"}

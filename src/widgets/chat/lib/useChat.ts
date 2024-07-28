@@ -24,6 +24,7 @@ export function useChat() {
         const newAnswers = {
             options: params.options,
             answer: [params.freeAnswer],
+            audio: params.audio,
             warning: false
         };
 
@@ -99,7 +100,8 @@ export function useChat() {
         const params = {
             questionId: activeQuestionId,
             freeAnswer: updateAnswer.answer[0],
-            options: updateAnswer.options
+            options: updateAnswer.options,
+            audio: updateAnswer.audio,
         }
 
         const newQuestions = createOrUpdateAnswers(params, index);
@@ -154,7 +156,8 @@ export function useChat() {
 
     const sendAnswerHandler = useCallback(async (params: {
         freeAnswer: string,
-        options: string[]
+        options: string[],
+        audio: HTMLAudioElement | null
     }) => {
         if (answerLoading || questionLoading || !activeQuestionId) return;
 

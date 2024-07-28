@@ -1,12 +1,14 @@
 import {ChangeEvent, KeyboardEventHandler, useEffect, useRef, useState} from "react";
 import {eventBus, useAfterRender} from "../../../shared/lib";
 import {ChatEvents} from "../enum";
+import {AudioRecorderPlugin} from "audio-recorder-plugin";
 
 type ChatAnswerAreaProps = {
     options: string[],
     sendAnswerHandler: (params: {
         freeAnswer: string,
-        options: string[]
+        options: string[],
+        audio: HTMLAudioElement | null
     }) => void,
     isTouchDevice: boolean
 }
@@ -20,6 +22,9 @@ export function useChatAnswer(
     const textareaRef = useRef<HTMLTextAreaElement | null>(null);
     const MAX_ROWS = 6;
     const optionsRef = useRef<HTMLUListElement | null>(null);
+    const [isRecord, setIsRecord] = useState(false);
+    const recorder = useRef(new AudioRecorderPlugin());
+    const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
 
     useAfterRender(() => {
         if (optionsRef.current) {
@@ -37,6 +42,12 @@ export function useChatAnswer(
 
         setOptions(optionsTemplate);
     }, [props.options]);
+
+    useEffect(() => {
+        if (audio) {
+            submitHandler();
+        }
+    }, [audio])
 
     const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
         setAnswer(event.target.value);
@@ -80,7 +91,9 @@ export function useChatAnswer(
     const submitHandler = () => {
         if (!(answer.length
             || (options && Object.values(options)
-                .includes(true)))) return;
+                .includes(true))
+            || audio
+        )) return;
 
         const checkedOptions = options ? Object.keys(options).filter(option => {
             return options[option];
@@ -89,6 +102,7 @@ export function useChatAnswer(
         const params = {
             freeAnswer: answer,
             options: checkedOptions,
+            audio: audio
         }
 
         props.sendAnswerHandler(params);
@@ -98,6 +112,7 @@ export function useChatAnswer(
     const resetData = () => {
         setAnswer("");
         setRows(1);
+        setAudio(null);
     }
 
     const settingsTextarea = props.isTouchDevice ? {
@@ -117,6 +132,30 @@ export function useChatAnswer(
         });
     }
 
+    const recordHandler = () => {
+        isRecord ? stopRecord() : startRecord();
+    }
+
+    const startRecord = async () => {
+        try {
+            await recorder.current.init();
+            await recorder.current.startRecording();
+            setIsRecord(true);
+        } catch (error) {
+            console.error('Error starting the audio recorder:', error);
+        }
+    }
+
+    const stopRecord = async () => {
+        try {
+            const audio = await recorder.current.stopRecording();
+            setIsRecord(false);
+            setAudio(audio);
+        } catch (error) {
+            console.error('Error stopping the audio recorder:', error);
+        }
+    }
+
     return {
         rows,
         handleChange,
@@ -128,5 +167,7 @@ export function useChatAnswer(
         toggleChecked,
         options,
         optionsRef,
+        recordHandler,
+        isRecord,
     }
 }

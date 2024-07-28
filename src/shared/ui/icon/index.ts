@@ -4,3 +4,4 @@ export * from './RotateIcon';
 export * from './SendIcon';
 export * from './UserIcon';
 export * from './WarningIcon';
+export * from './MicrophoneIcon';
