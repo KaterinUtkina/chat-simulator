@@ -7,7 +7,7 @@ type CustomScrollProps = {
     children: React.ReactNode,
 }
 
-function ScrollChatMessage(
+function ChatMessageScroll(
     props: CustomScrollProps
 ) {
     const ref = useRef<OverlayScrollbarsComponentRef>(null);
@@ -63,4 +63,4 @@ function ScrollChatMessage(
     );
 }
 
-export default ScrollChatMessage;
+export default ChatMessageScroll;

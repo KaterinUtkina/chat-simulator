@@ -2,7 +2,7 @@ import styles from "../styles/chat.module.css";
 import {memo, useCallback} from "react";
 import {Chat} from "../types";
 import {ClockIcon, RotateIcon, UserIcon, WarningIcon} from "../../../shared/ui";
-import ScrollChatMessage from "./ScrollChatMessage.tsx";
+import ChatMessageScroll from "./ChatMessageScroll.tsx";
 
 type ChatMessageProps = {
     questions: Chat.QuestionTemplate[],
@@ -85,7 +85,7 @@ const ChatMessages = memo(function ChatMessages(props: ChatMessageProps) {
     }
 
     return (
-        <ScrollChatMessage>
+        <ChatMessageScroll>
             <ul className={"w-full md:w-7/12 mx-auto px-4 md:px-0 py-5"}>
                 {props.questions.map(questionItem => (
                     <li key={questionItem.id}>
@@ -106,7 +106,7 @@ const ChatMessages = memo(function ChatMessages(props: ChatMessageProps) {
                     loadingQuestion()
                 ) : <></>}
             </ul>
-        </ScrollChatMessage>
+        </ChatMessageScroll>
     )
 });
 
