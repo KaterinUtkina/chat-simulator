@@ -1,5 +1,5 @@
 import "overlayscrollbars/styles/overlayscrollbars.css";
-import {Chat} from "../features/chat";
+import {Chat} from "../features/chat/ui/Chat.tsx";
 
 function App() {
     return <Chat/>

@@ -1,7 +1,8 @@
 import {memo} from "react";
 import {useChatAnswer} from "../lib/useChatAnswer.ts";
-import {MicrophoneIcon, SendIcon} from "../../../shared/ui";
 import {StopIcon} from "../../../shared/ui/icon/StopIcon.tsx";
+import {SendIcon} from "../../../shared/ui/icon/SendIcon.tsx";
+import {MicrophoneIcon} from "../../../shared/ui/icon/MicrophoneIcon.tsx";
 
 type ChatAnswerAreaProps = {
     options: string[],
