@@ -1,7 +1,7 @@
 import React, {useEffect, useRef} from 'react';
 import {OverlayScrollbarsComponent, OverlayScrollbarsComponentRef} from "overlayscrollbars-react";
-import {eventBus} from "../../../shared/lib";
 import {ChatEvents} from "../enum";
+import {eventBus} from "../../../shared/lib/EventBus.ts";
 
 type CustomScrollProps = {
     children: React.ReactNode,

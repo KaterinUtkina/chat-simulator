@@ -1,7 +1,8 @@
 import {ChangeEvent, KeyboardEventHandler, useEffect, useRef, useState} from "react";
-import {eventBus, useAfterRender} from "../../../shared/lib";
 import {ChatEvents} from "../enum";
 import {AudioRecorderPlugin} from "audio-recorder-plugin";
+import {useAfterRender} from "../../../shared/lib/useAfterRender.tsx";
+import {eventBus} from "../../../shared/lib/EventBus.ts";
 
 type ChatAnswerAreaProps = {
     options: string[],
