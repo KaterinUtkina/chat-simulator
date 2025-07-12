@@ -16,9 +16,29 @@ export function useChat() {
         = useState<string[]>([]);
     const [isTouchDevice, setIsTouchDevice] = useState<boolean>(false);
 
-    const createOrUpdateAnswers = (
-        params: Chat.AnswerRequest,
-        index: number
+    const getQuestionHandler = useCallback((questionsList = questions) => {
+        setTimeout(() => {
+            setActiveAnswerIndex(0);
+            stopQuestionLoading();
+
+            const newQuestions = [
+                ...questionsList,
+                {
+                    id: questionsMock[questionsList.length].id,
+                    text: questionsMock[questionsList.length].text,
+                    answer: []
+                }
+            ];
+
+            setQuestions(newQuestions);
+            setOptionsQuestions(questionsMock[questionsList.length].options as string[]);
+            setActiveQuestionId(questionsMock[questionsList.length].id);
+        }, 500);
+    }, []);
+
+    const createOrUpdateAnswers = useCallback((
+      params: Chat.AnswerRequest,
+      index: number
     ) => {
 
         const newAnswers = {
@@ -30,23 +50,23 @@ export function useChat() {
 
         return questions.map(item => {
             if (item.id === params.questionId) {
-                let answers = [...item.answer];
+                const answers = [...item.answer];
                 answers[index] = newAnswers;
 
                 return {
                     ...item,
                     answer: answers,
-                }
+                };
             }
 
             return item;
         });
-    }
+    }, [questions]);
 
-    const sendAnswerAndGetQuestion = async (
-        params: Chat.AnswerRequest,
-        questionsList: Chat.QuestionTemplate[],
-        answerIndex: number
+    const sendAnswerAndGetQuestion = useCallback(async (
+      params: Chat.AnswerRequest,
+      questionsList: Chat.QuestionTemplate[],
+      answerIndex: number
     ) => {
         try {
             await sendAnswer();
@@ -59,7 +79,7 @@ export function useChat() {
             startQuestionLoading();
 
             void getQuestionHandler(questionsList);
-        } catch (err: any) {
+        } catch {
             stopAnswerLoading();
 
             const warningQuestions = questionsList.map(item => {
@@ -71,11 +91,11 @@ export function useChat() {
                                 return {
                                     ...itemAnswer,
                                     warning: true
-                                }
+                                };
                             }
-                            return itemAnswer
+                            return itemAnswer;
                         })
-                    }
+                    };
                 }
 
                 return item;
@@ -83,7 +103,7 @@ export function useChat() {
 
             setQuestions(warningQuestions);
         }
-    }
+    }, [getQuestionHandler, startQuestionLoading, stopAnswerLoading]);
 
     const reloadAnswer = useCallback((index: number) => {
         if (answerLoading || questionLoading) {
@@ -93,7 +113,7 @@ export function useChat() {
         startAnswerLoading();
 
         const updateAnswer = questions
-            .find(item => item.id === activeQuestionId)?.answer[index];
+          .find(item => item.id === activeQuestionId)?.answer[index];
 
         if (!updateAnswer || !activeQuestionId) return;
 
@@ -102,7 +122,7 @@ export function useChat() {
             freeAnswer: updateAnswer.answer[0],
             options: updateAnswer.options,
             audio: updateAnswer.audio,
-        }
+        };
 
         const newQuestions = createOrUpdateAnswers(params, index);
         setQuestions(newQuestions);
@@ -129,26 +149,6 @@ export function useChat() {
             }, 500);
         })
     }
-
-    const getQuestionHandler = useCallback((questionsList = questions) => {
-        setTimeout(() => {
-            setActiveAnswerIndex(0);
-            stopQuestionLoading();
-
-            const newQuestions = [
-                ...questionsList,
-                {
-                    id: questionsMock[questionsList.length].id,
-                    text: questionsMock[questionsList.length].text,
-                    answer: []
-                }
-            ];
-
-            setQuestions(newQuestions);
-            setOptionsQuestions(questionsMock[questionsList.length].options as string[]);
-            setActiveQuestionId(questionsMock[questionsList.length].id);
-        }, 500);
-    }, []);
 
     useEffect(() => {
         void getQuestionHandler();

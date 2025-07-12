@@ -1,11 +1,13 @@
 import {useEffect} from "react";
 
-export function useAfterRender(callback: () => void, dependencies: any[]) {
+type Dependence = Record<string, boolean> | null;
+
+export function useAfterRender(callback: () => void, dependencies: Dependence[]) {
     useEffect(() => {
         const handle = requestAnimationFrame(() => {
             callback();
         });
 
         return () => cancelAnimationFrame(handle);
-    }, dependencies);
+    }, [callback, dependencies]);
 }

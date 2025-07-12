@@ -1,8 +1,8 @@
-import {ChangeEvent, KeyboardEventHandler, useEffect, useRef, useState} from "react";
+import {ChangeEvent, KeyboardEventHandler, useCallback, useEffect, useRef, useState} from "react";
 import {ChatEvents} from "../enum";
 import {AudioRecorderPlugin} from "audio-recorder-plugin";
-import {useAfterRender} from "../../../shared/lib/useAfterRender.tsx";
-import {eventBus} from "../../../shared/lib/EventBus.ts";
+import {useAfterRender} from "../../../shared/hooks/useAfterRender.tsx";
+import {eventBus} from "../../../shared/services/EventBus.ts";
 
 type ChatAnswerAreaProps = {
     options: string[],
@@ -27,11 +27,14 @@ export function useChatAnswer(
     const recorder = useRef(new AudioRecorderPlugin());
     const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
 
-    useAfterRender(() => {
-        if (optionsRef.current) {
-            eventBus.emit(ChatEvents.OPTIONS_RENDERED);
-        }
-    }, [options]);
+    useAfterRender(
+        useCallback(() => {
+            if (optionsRef.current) {
+                eventBus.emit(ChatEvents.OPTIONS_RENDERED);
+            }
+        }, []),
+      [options]
+    );
 
     useEffect(() => {
         const optionsTemplate = props.options.reduce((acc, option) => {
@@ -44,11 +47,32 @@ export function useChatAnswer(
         setOptions(optionsTemplate);
     }, [props.options]);
 
+    const submitHandler = useCallback(() => {
+        if (!(answer.length
+          || (options && Object.values(options)
+            .includes(true))
+          || audio
+        )) return;
+
+        const checkedOptions = options ? Object.keys(options).filter(option => {
+            return options[option];
+        }) : [];
+
+        const params = {
+            freeAnswer: answer,
+            options: checkedOptions,
+            audio: audio
+        };
+
+        props.sendAnswerHandler(params);
+        resetData();
+    }, [answer, audio, options, props]);
+
     useEffect(() => {
         if (audio) {
             submitHandler();
         }
-    }, [audio])
+    }, [audio, submitHandler]);
 
     const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
         setAnswer(event.target.value);
@@ -88,27 +112,6 @@ export function useChatAnswer(
             submitHandler();
         }
     };
-
-    const submitHandler = () => {
-        if (!(answer.length
-            || (options && Object.values(options)
-                .includes(true))
-            || audio
-        )) return;
-
-        const checkedOptions = options ? Object.keys(options).filter(option => {
-            return options[option];
-        }) : [];
-
-        const params = {
-            freeAnswer: answer,
-            options: checkedOptions,
-            audio: audio
-        }
-
-        props.sendAnswerHandler(params);
-        resetData();
-    }
 
     const resetData = () => {
         setAnswer("");

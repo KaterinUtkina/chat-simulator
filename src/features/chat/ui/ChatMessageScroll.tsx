@@ -1,17 +1,17 @@
-import React, {useEffect, useRef} from 'react';
+import {ReactNode, useCallback, useEffect, useRef} from 'react';
 import {OverlayScrollbarsComponent, OverlayScrollbarsComponentRef} from "overlayscrollbars-react";
 import {ChatEvents} from "../enum";
-import {eventBus} from "../../../shared/lib/EventBus.ts";
+import {eventBus} from "../../../shared/services/EventBus.ts";
 
 type CustomScrollProps = {
-    children: React.ReactNode,
+    children: ReactNode,
 }
 
-function ChatMessageScroll(
+const ChatMessageScroll = (
     props: CustomScrollProps
-) {
-    const ref = useRef<OverlayScrollbarsComponentRef>(null);
-    const contentRef = useRef<HTMLDivElement>(null);
+) => {
+    const ref = useRef<OverlayScrollbarsComponentRef | null>(null);
+    const contentRef = useRef<HTMLDivElement | null>(null);
 
     const scrollContent = () => {
         const { current } = ref;
@@ -28,6 +28,14 @@ function ChatMessageScroll(
         });
     };
 
+    const initEvents = useCallback(() => {
+        eventBus.on(ChatEvents.OPTIONS_RENDERED, scrollContent);
+    }, []);
+
+    const destroyEvents = useCallback(() => {
+        eventBus.off(ChatEvents.OPTIONS_RENDERED, scrollContent);
+    }, []);
+
     useEffect(() => {
         if (contentRef.current) {
             scrollContent();
@@ -41,15 +49,7 @@ function ChatMessageScroll(
         return () => {
             destroyEvents();
         }
-    }, []);
-
-    const initEvents = () => {
-        eventBus.on(ChatEvents.OPTIONS_RENDERED, scrollContent);
-    };
-
-    const destroyEvents = () => {
-        eventBus.off(ChatEvents.OPTIONS_RENDERED, scrollContent);
-    }
+    }, [destroyEvents, initEvents]);
 
     return (
         <OverlayScrollbarsComponent
